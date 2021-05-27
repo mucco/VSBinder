@@ -13,3 +13,8 @@ Tool to help people use Visual Studio Code for DMing and worldbuilding
 - [ ] Character creation
 - [ ] Geography and history
 - [ ] Random tables
+
+## Eventually
+
+- [ ] Links to other pages
+- [ ] Intellisense

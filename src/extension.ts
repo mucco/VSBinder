@@ -14,21 +14,28 @@ export function activate(context: vscode.ExtensionContext) {
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
 	let disposable = vscode.commands.registerCommand('VSBinder.createCampaign', () => {
-		// The code you place here will be executed every time your command is executed
 
-		// Display a message box to the user
+		let options: vscode.InputBoxOptions = {
+			prompt: "What is the name of the campaign?",
+		};
+		vscode.window.showInputBox(options).then(campaign => {
+			options.prompt = "What is the name of the first adventure?";
+			vscode.window.showInputBox(options).then(adventure => {
+				if (!vscode.workspace.workspaceFolders)
+					return;
+				const wsedit = new vscode.WorkspaceEdit();
+				const wsPath = vscode.workspace.workspaceFolders[0].uri.fsPath + "/" + campaign;
+				wsedit.createFile(vscode.Uri.file(wsPath + "/Campaign.md"));
+				wsedit.createFile(vscode.Uri.file(wsPath + "/Adventures/01 " + adventure + ".md"));
+				vscode.workspace.applyEdit(wsedit);
+			});
+		});
+
 		vscode.window.showInformationMessage('Hello World from VSBinder!');
-		if (!vscode.workspace.workspaceFolders)
-		return;
-		const wsedit = new vscode.WorkspaceEdit();
-		const wsPath = vscode.workspace.workspaceFolders[0].uri.fsPath + "/newcampaign";
-		let uri = vscode.Uri.file(wsPath + "/campaign.md");
-		wsedit.createFile(uri);
-		vscode.workspace.applyEdit(wsedit);
 	});
 
 	context.subscriptions.push(disposable);
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }
