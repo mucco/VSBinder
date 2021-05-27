@@ -1,5 +1,5 @@
 {
-	"name": "VSBinder",
+	"name": "vsbinder",
 	"displayName": "VSBinder",
 	"description": "",
 	"version": "0.0.1",
@@ -10,14 +10,14 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:VSBinder.helloWorld"
+		"onCommand:VSBinder.createCampaign"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "VSBinder.helloWorld",
-				"title": "Hello World"
+				"command": "VSBinder.createCampaign",
+				"title": "Create new Campaign"
 			}
 		]
 	},
