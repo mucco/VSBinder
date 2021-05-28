@@ -2,21 +2,18 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
-let wsPath: string = "";
-let currentWorld: string = "";
-let currentCampaign: string = "";
-let currentAdventure: string = "";
+import { state } from "./state";
 
 function getWorldPath() {
-	return wsPath + "/" + currentWorld;
+	return state.wsPath + "/" + state.currentWorld;
 }
 
 function getCampaignPath() {
-	return getWorldPath() + "/Campaigns/" + currentCampaign;
+	return getWorldPath() + "/Campaigns/" + state.currentCampaign;
 }
 
 function createAdventure(prompt: string = "What is the name of the adventure?") {
-	if (currentCampaign == "") {
+	if (state.currentCampaign === "") {
 		console.log('Please create a campaign first!');
 		vscode.window.showInformationMessage('Please create a campaign first!');
 		return;
@@ -30,28 +27,31 @@ function createAdventure(prompt: string = "What is the name of the adventure?") 
 		let maxId = 1;
 		adventures.forEach(adv => {
 			let id = adv.path.split('/').pop()?.slice(0, 2);
-			if (id)
+			if (id) {
 				maxId = Math.max(maxId, +id + 1);
+			}
 		});
 		let maxIdString = (maxId > 9 ? "" : "0") + maxId;
 
 		vscode.window.showInputBox(options).then(adventure => {
-			if (!adventure)
+			if (!adventure) {
 				return;
+			}
 			let name = getCampaignPath() + "/Adventures/" + maxIdString + " " + adventure + ".md";
 			let wsedit = new vscode.WorkspaceEdit();
 			wsedit.createFile(vscode.Uri.file(name));
-			currentAdventure = name;
+			state.currentAdventure = name;
 			vscode.workspace.applyEdit(wsedit).then((success) => {
-				if (!success)
+				if (!success) {
 					vscode.window.showInformationMessage("Create adventure " + name + " result " + success);
+				}
 			});
 		});
 	});
 }
 
 function createCampaign() {
-	if (currentWorld == "") {
+	if (state.currentWorld === "") {
 		console.log('Please create a world first!');
 		vscode.window.showInformationMessage('Please create a world first!');
 		return;
@@ -61,9 +61,10 @@ function createCampaign() {
 		prompt: "What is the name of the campaign?",
 	};
 	vscode.window.showInputBox(options).then(campaign => {
-		if (!campaign)
+		if (!campaign) {
 			return;
-		currentCampaign = campaign;
+		}
+		state.currentCampaign = campaign;
 		let wsedit = new vscode.WorkspaceEdit();
 		wsedit.createFile(vscode.Uri.file(getCampaignPath() + "/Campaign.md"));
 		wsedit.createFile(vscode.Uri.file(getCampaignPath() + "/Characters/Sample Character.md"));
@@ -80,9 +81,10 @@ function createWorld() {
 		prompt: "What is the name of the world or setting?",
 	};
 	vscode.window.showInputBox(options).then(world => {
-		if (!world)
+		if (!world) {
 			return;
-		currentWorld = world;
+		}
+		state.currentWorld = world;
 		let wsedit = new vscode.WorkspaceEdit();
 		wsedit.createFile(vscode.Uri.file(getWorldPath() + "/" + world + ".md"));
 		wsedit.createFile(vscode.Uri.file(getWorldPath() + "/Locations/Sample location.md"));
@@ -96,16 +98,17 @@ function createWorld() {
 }
 
 function setActiveCampaign() {
-	vscode.workspace.findFiles(new vscode.RelativePattern(wsPath, "**/Campaign.md")).then(campaigns => {
-		if (campaigns.length == 0)
+	vscode.workspace.findFiles(new vscode.RelativePattern(state.wsPath, "**/Campaign.md")).then(campaigns => {
+		if (campaigns.length === 0) {
 			return;
+		}
 		let splitPath = campaigns[0].path.split('/');
 		splitPath.pop(); // discard 'Campaign.md'
-		currentCampaign = splitPath.pop() ?? ""; // retrieve campaign folder name
-		console.log("Set active campaign to " + currentCampaign);
+		state.currentCampaign = splitPath.pop() ?? ""; // retrieve campaign folder name
+		console.log("Set active campaign to " + state.currentCampaign);
 		splitPath.pop(); // discard 'Campaigns'
-		currentWorld = splitPath.pop() ?? ""; // retrieve world folder name
-		console.log("Set active world to " + currentWorld);
+		state.currentWorld = splitPath.pop() ?? ""; // retrieve world folder name
+		console.log("Set active world to " + state.currentWorld);
 	});
 }
 
@@ -117,10 +120,11 @@ export function activate(context: vscode.ExtensionContext) {
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "VSBinder" is now active!');
 
-	if (!vscode.workspace.workspaceFolders)
+	if (!vscode.workspace.workspaceFolders) {
 		return;
+	}
 
-	wsPath = vscode.workspace.workspaceFolders[0].uri.path;
+	state.wsPath = vscode.workspace.workspaceFolders[0].uri.path;
 	setActiveCampaign();
 
 	// The command has been defined in the package.json file
