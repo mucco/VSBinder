@@ -10,8 +10,8 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:VSBinder.createCampaign",
-		"onCommand:VSBinder.createAdventure"
+		"workspaceContains:**/Campaign.md",
+		"onCommand:VSBinder.createCampaign"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
