@@ -3,11 +3,16 @@
 import * as vscode from 'vscode';
 
 let wsPath: string = "";
+let currentWorld: string = "";
 let currentCampaign: string = "";
 let currentAdventure: string = "";
 
+function getWorldPath() {
+	return wsPath + "/" + currentWorld;
+}
+
 function getCampaignPath() {
-	return wsPath + "/" + currentCampaign;
+	return getWorldPath() + "/Campaigns/" + currentCampaign;
 }
 
 function createAdventure(prompt: string = "What is the name of the adventure?") {
@@ -46,6 +51,12 @@ function createAdventure(prompt: string = "What is the name of the adventure?") 
 }
 
 function createCampaign() {
+	if (currentWorld == "") {
+		console.log('Please create a world first!');
+		vscode.window.showInformationMessage('Please create a world first!');
+		return;
+	}
+
 	let options: vscode.InputBoxOptions = {
 		prompt: "What is the name of the campaign?",
 	};
@@ -55,11 +66,32 @@ function createCampaign() {
 		currentCampaign = campaign;
 		let wsedit = new vscode.WorkspaceEdit();
 		wsedit.createFile(vscode.Uri.file(getCampaignPath() + "/Campaign.md"));
-		Promise.resolve(vscode.workspace.applyEdit(wsedit).then((success) => {
+		wsedit.createFile(vscode.Uri.file(getCampaignPath() + "/Characters/Sample Character.md"));
+		vscode.workspace.applyEdit(wsedit).then((success) => {
 			vscode.window.showInformationMessage("Create campaign " + campaign + " result " + success);
-		}));
+		});
 
 		createAdventure("What is the name of the first adventure?");
+	});
+}
+
+function createWorld() {
+	let options: vscode.InputBoxOptions = {
+		prompt: "What is the name of the world or setting?",
+	};
+	vscode.window.showInputBox(options).then(world => {
+		if (!world)
+			return;
+		currentWorld = world;
+		let wsedit = new vscode.WorkspaceEdit();
+		wsedit.createFile(vscode.Uri.file(getWorldPath() + "/" + world + ".md"));
+		wsedit.createFile(vscode.Uri.file(getWorldPath() + "/Locations/Sample location.md"));
+		wsedit.createFile(vscode.Uri.file(getWorldPath() + "/Bestiary/Sample monster.md"));
+		vscode.workspace.applyEdit(wsedit).then((success) => {
+			vscode.window.showInformationMessage("Create world " + world + " result " + success);
+		});
+	}).then(() => {
+		createCampaign();
 	});
 }
 
@@ -71,6 +103,9 @@ function setActiveCampaign() {
 		splitPath.pop(); // discard 'Campaign.md'
 		currentCampaign = splitPath.pop() ?? ""; // retrieve campaign folder name
 		console.log("Set active campaign to " + currentCampaign);
+		splitPath.pop(); // discard 'Campaigns'
+		currentWorld = splitPath.pop() ?? ""; // retrieve world folder name
+		console.log("Set active world to " + currentWorld);
 	});
 }
 
@@ -91,7 +126,9 @@ export function activate(context: vscode.ExtensionContext) {
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('VSBinder.createCampaign', createCampaign);
+	let disposable = vscode.commands.registerCommand('VSBinder.createWorld', createWorld);
+	context.subscriptions.push(disposable);
+	disposable = vscode.commands.registerCommand('VSBinder.createCampaign', createCampaign);
 	context.subscriptions.push(disposable);
 	disposable = vscode.commands.registerCommand('VSBinder.createAdventure', createAdventure);
 	context.subscriptions.push(disposable);

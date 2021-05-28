@@ -11,11 +11,17 @@
 	],
 	"activationEvents": [
 		"workspaceContains:**/Campaign.md",
-		"onCommand:VSBinder.createCampaign"
+		"onCommand:VSBinder.createWorld",
+		"onCommand:VSBinder.createCampaign",
+		"onCommand:VSBinder.createAdventure"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
+			{
+				"command": "VSBinder.createWorld",
+				"title": "Create new World"
+			},
 			{
 				"command": "VSBinder.createCampaign",
 				"title": "Create new Campaign"
