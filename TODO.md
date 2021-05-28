@@ -8,7 +8,7 @@ Tool to help people use Visual Studio Code for DMing and worldbuilding
 
 - [x] World creation
 - [ ] Campaign creation
-- [ ] Adventure creation
+- [x] Adventure creation
 
 ## Important
 
