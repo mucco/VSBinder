@@ -2,51 +2,27 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
-import { state } from "./state";
+import { state, getWorldPath, getCampaignPath } from "./state";
+import { createAdventure } from "./adventure";
 
-function getWorldPath() {
-	return state.wsPath + "/" + state.currentWorld;
-}
-
-function getCampaignPath() {
-	return getWorldPath() + "/Campaigns/" + state.currentCampaign;
-}
-
-function createAdventure(prompt: string = "What is the name of the adventure?") {
-	if (state.currentCampaign === "") {
-		console.log('Please create a campaign first!');
-		vscode.window.showInformationMessage('Please create a campaign first!');
-		return;
-	}
-
+function createWorld() {
 	let options: vscode.InputBoxOptions = {
-		prompt: prompt,
+		prompt: "What is the name of the world or setting?",
 	};
-
-	vscode.workspace.findFiles(new vscode.RelativePattern(getCampaignPath(), "Adventures/*.md")).then(adventures => {
-		let maxId = 1;
-		adventures.forEach(adv => {
-			let id = adv.path.split('/').pop()?.slice(0, 2);
-			if (id) {
-				maxId = Math.max(maxId, +id + 1);
-			}
+	vscode.window.showInputBox(options).then(world => {
+		if (!world) {
+			return;
+		}
+		state.currentWorld = world;
+		let wsedit = new vscode.WorkspaceEdit();
+		wsedit.createFile(vscode.Uri.file(getWorldPath() + "/" + world + ".md"));
+		wsedit.createFile(vscode.Uri.file(getWorldPath() + "/Locations/Sample location.md"));
+		wsedit.createFile(vscode.Uri.file(getWorldPath() + "/Bestiary/Sample monster.md"));
+		vscode.workspace.applyEdit(wsedit).then((success) => {
+			vscode.window.showInformationMessage("Create world " + world + " result " + success);
 		});
-		let maxIdString = (maxId > 9 ? "" : "0") + maxId;
-
-		vscode.window.showInputBox(options).then(adventure => {
-			if (!adventure) {
-				return;
-			}
-			let name = getCampaignPath() + "/Adventures/" + maxIdString + " " + adventure + ".md";
-			let wsedit = new vscode.WorkspaceEdit();
-			wsedit.createFile(vscode.Uri.file(name));
-			state.currentAdventure = name;
-			vscode.workspace.applyEdit(wsedit).then((success) => {
-				if (!success) {
-					vscode.window.showInformationMessage("Create adventure " + name + " result " + success);
-				}
-			});
-		});
+	}).then(() => {
+		createCampaign();
 	});
 }
 
@@ -73,27 +49,6 @@ function createCampaign() {
 		});
 
 		createAdventure("What is the name of the first adventure?");
-	});
-}
-
-function createWorld() {
-	let options: vscode.InputBoxOptions = {
-		prompt: "What is the name of the world or setting?",
-	};
-	vscode.window.showInputBox(options).then(world => {
-		if (!world) {
-			return;
-		}
-		state.currentWorld = world;
-		let wsedit = new vscode.WorkspaceEdit();
-		wsedit.createFile(vscode.Uri.file(getWorldPath() + "/" + world + ".md"));
-		wsedit.createFile(vscode.Uri.file(getWorldPath() + "/Locations/Sample location.md"));
-		wsedit.createFile(vscode.Uri.file(getWorldPath() + "/Bestiary/Sample monster.md"));
-		vscode.workspace.applyEdit(wsedit).then((success) => {
-			vscode.window.showInformationMessage("Create world " + world + " result " + success);
-		});
-	}).then(() => {
-		createCampaign();
 	});
 }
 
