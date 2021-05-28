@@ -2,6 +2,10 @@
 
 Tool to help people use Visual Studio Code for DMing and worldbuilding
 
+## Next
+
+- [ ] Extrapolate adventure creation
+
 ## MVP
 
 - [ ] World creation
