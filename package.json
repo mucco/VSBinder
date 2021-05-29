@@ -1,8 +1,9 @@
 {
 	"name": "vsbinder",
 	"displayName": "VSBinder",
-	"description": "",
-	"version": "0.0.1",
+	"description": "Tool to help RPG Game Masters organize their DMing and worldbuilding assets via Visual Studio Code",
+	"version": "0.1.0",
+	"publisher": "GiacomoCappellari",
 	"engines": {
 		"vscode": "^1.56.0"
 	},

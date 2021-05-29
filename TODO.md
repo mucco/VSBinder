@@ -1,25 +1,19 @@
 # VSBinder
 
-Tool to help people use Visual Studio Code for DMing and worldbuilding
+Tool to help RPG Game Masters organize their DMing and worldbuilding assets via Visual Studio Code
 
 ## Next
 
-## MVP
-
-- [x] World creation
-- [x] Campaign creation
-- [x] Adventure creation
-- [ ] Change World/Campaign/Adventure
-
 ## Important
 
+- [ ] Change World/Campaign/Adventure
 - [ ] Bestiary
 - [ ] Character creation
 - [ ] Geography and history
 - [ ] Random tables
 - [ ] Ways to roll stuff
+- [ ] Icons
 
 ## Eventually
 
-- [ ] Links to other pages
 - [ ] Intellisense
