@@ -36,7 +36,7 @@ export function createAdventure(prompt: string = "What is the name of the advent
             if (!vscode.workspace.workspaceFolders) {
                 return;
             }
-            vscode.workspace.openTextDocument(vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, "templates/Adventure.md")).then((source) => {
+            vscode.workspace.openTextDocument(vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, "templates/AdventureTemplate.md")).then((source) => {
                 fs.writeFileSync(vscode.Uri.file(name).fsPath, source.getText());
                 vscode.workspace.openTextDocument(vscode.Uri.file(name)).then((dest) => {
                     vscode.window.showTextDocument(dest);

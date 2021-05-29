@@ -1,5 +1,7 @@
 # Adventure Name
 
+General synopsis of the adventure and target length.
+
 ## Main Goal
 
 - Will the party manage to do the thing?
@@ -7,7 +9,7 @@
 
 ### Subgoals
 
-If applicable. Overall campaign or arc theme might factor into this.
+If applicable. Overall campaign or arc theme might factor into this. PC goals and motivations should tie into this as well.
 
 ## Main NPCs, Factions and external threats
 

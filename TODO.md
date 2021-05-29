@@ -7,8 +7,9 @@ Tool to help people use Visual Studio Code for DMing and worldbuilding
 ## MVP
 
 - [x] World creation
-- [ ] Campaign creation
+- [x] Campaign creation
 - [x] Adventure creation
+- [ ] Change World/Campaign/Adventure
 
 ## Important
 
@@ -16,6 +17,7 @@ Tool to help people use Visual Studio Code for DMing and worldbuilding
 - [ ] Character creation
 - [ ] Geography and history
 - [ ] Random tables
+- [ ] Ways to roll stuff
 
 ## Eventually
 
