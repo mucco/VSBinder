@@ -2,7 +2,7 @@
 	"name": "vsbinder",
 	"displayName": "VSBinder",
 	"description": "Tool to help RPG Game Masters organize their DMing and worldbuilding assets via Visual Studio Code",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"publisher": "GiacomoCappellari",
 	"repository": {
 		"url": "https://github.com/mucco/VSBinder.git"
