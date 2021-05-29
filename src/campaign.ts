@@ -29,7 +29,7 @@ export function createCampaign() {
             vscode.window.showInformationMessage("Create campaign " + campaign + " result " + success);
 
             if (vscode.workspace.workspaceFolders) {
-                vscode.workspace.openTextDocument(vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, "templates/CampaignTemplate.md")).then((source) => {
+                vscode.workspace.openTextDocument(state.templates.campaign).then((source) => {
                     fs.writeFileSync(vscode.Uri.file(name).fsPath, source.getText());
                     vscode.workspace.openTextDocument(vscode.Uri.file(name));
                 });

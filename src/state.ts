@@ -1,5 +1,11 @@
+import * as vscode from "vscode";
+
 let state = {
     wsPath: "",
+    templates: {
+        adventure: "",
+        campaign: "",
+    },
     currentWorld: "",
     currentCampaign: "",
     currentAdventure: "",

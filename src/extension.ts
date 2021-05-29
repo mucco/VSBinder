@@ -2,6 +2,8 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
+import * as path from 'path';
+
 import { state, getWorldPath } from "./state";
 import { createAdventure } from "./adventure";
 import { createCampaign, setActiveCampaign } from "./campaign";
@@ -40,6 +42,8 @@ export function activate(context: vscode.ExtensionContext) {
 	}
 
 	state.wsPath = vscode.workspace.workspaceFolders[0].uri.path;
+	state.templates.adventure = context.asAbsolutePath(path.join("templates", "AdventureTemplate.md"));
+	state.templates.campaign = context.asAbsolutePath(path.join("templates", "CampaignTemplate.md"));
 	setActiveCampaign();
 
 	// The command has been defined in the package.json file
