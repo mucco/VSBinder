@@ -26,6 +26,24 @@ If applicable. Overall campaign or arc theme might factor into this. PC goals an
 - Innkeeper
 - Three random names
 
+## Major Plot Points
+
+- Three parts
+  - Setup
+  - Twist
+  - Ending
+- Four parts
+  - Arrival/introduction/lay of the land
+  - Collection/settlement/targeted scouting
+  - Planning and execution
+  - Final challenge
+- Five parts
+  - Entrance/guardian
+  - Puzzle/challenge
+  - Trick/setback
+  - Climax/big conflict
+  - Reward/twist
+
 ## Scenes
 
 ### Scene 1: Hook
