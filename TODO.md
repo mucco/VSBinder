@@ -4,16 +4,17 @@ Tool to help RPG Game Masters organize their DMing and worldbuilding assets via 
 
 ## Next
 
+- [ ] Character creation
+- [ ] Bestiary
+- [ ] Ways to roll stuff
+
 ## Important
 
+- [ ] Intellisense
 - [ ] Change World/Campaign/Adventure
-- [ ] Bestiary
-- [ ] Character creation
-- [ ] Geography and history
 - [ ] Random tables
-- [ ] Ways to roll stuff
-- [ ] Icons
 
 ## Eventually
 
-- [ ] Intellisense
+- [ ] Geography and history
+- [ ] Icons
