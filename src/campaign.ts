@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 
-import { state, getCampaignPath } from "./state";
+import { state, getCampaignPath, setCurrentCampaign } from "./state";
 import { createAdventure } from "./adventure";
 
 let fs = require("fs");
@@ -19,7 +19,7 @@ export function createCampaign() {
         if (!campaign) {
             return;
         }
-        state.currentCampaign = campaign;
+        setCurrentCampaign(campaign);
         let wsedit = new vscode.WorkspaceEdit();
         let name = getCampaignPath() + "/Campaign.md";
         wsedit.createFile(vscode.Uri.file(name));
@@ -41,16 +41,17 @@ export function createCampaign() {
 }
 
 export function setActiveCampaign() {
-    vscode.workspace.findFiles(new vscode.RelativePattern(state.wsPath, "**/Campaign.md")).then(campaigns => {
+    return vscode.workspace.findFiles(new vscode.RelativePattern(state.wsPath, "**/Campaign.md")).then(campaigns => {
         if (campaigns.length === 0) {
             return;
         }
         let splitPath = campaigns[0].path.split('/');
         splitPath.pop(); // discard 'Campaign.md'
-        state.currentCampaign = splitPath.pop() ?? ""; // retrieve campaign folder name
-        console.log("Set active campaign to " + state.currentCampaign);
+        let campaign = splitPath.pop();
         splitPath.pop(); // discard 'Campaigns'
-        state.currentWorld = splitPath.pop() ?? ""; // retrieve world folder name
+        let world = splitPath.pop();
+        state.currentWorld = world ?? "";
         console.log("Set active world to " + state.currentWorld);
+        setCurrentCampaign(campaign ?? "");
     });
 }

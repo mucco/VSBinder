@@ -7,6 +7,7 @@ Tool to help RPG Game Masters organize their DMing and worldbuilding assets via 
 - [ ] Session generation
 - [ ] Character creation
 - [ ] Change World/Campaign/Adventure
+- [ ] Show what World/Campaign/Adventure is active
 
 ## Next
 

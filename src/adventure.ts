@@ -1,12 +1,48 @@
 import * as vscode from "vscode";
 
-import { state, getCampaignPath } from "./state";
+import { state, getCampaignPath, setCurrentAdventure } from "./state";
 
 let fs = require("fs");
 
+export function selectLastAdventure()
+{
+    if (state.currentCampaign === "") {
+        console.log('Selecting last adventure but no campaign');
+        vscode.window.showInformationMessage('Please create a campaign first!');
+        return;
+    }
+
+    vscode.workspace.findFiles(new vscode.RelativePattern(getCampaignPath(), "Adventures/*.md")).then(adventures => {
+        let maxId = 1;
+        let adventure = "";
+        adventures.forEach(adv => {
+            let adventureName = adv.path.split('/').pop() ?? "";
+            let id = adventureName.slice(0, 2);
+            if (id) {
+                let oldId = maxId;
+                maxId = Math.max(maxId, +id + 1);
+                if (oldId !== maxId)
+                {
+                    adventure = adventureName;
+                }
+            }
+        });
+
+        if (adventure !== "")
+        {
+            setCurrentAdventure(adventure);
+        }
+        else
+        {
+            console.log("No adventure found");
+            vscode.window.showInformationMessage("No adventure found in the campaign.");
+        }
+    });
+}
+
 export function createAdventure(prompt: string = "What is the name of the adventure?") {
     if (state.currentCampaign === "") {
-        console.log('Please create a campaign first!');
+        console.log('Creating adventure but no campaign');
         vscode.window.showInformationMessage('Please create a campaign first!');
         return;
     }
@@ -42,12 +78,12 @@ export function createAdventure(prompt: string = "What is the name of the advent
                     vscode.window.showTextDocument(dest);
                 });
             });
-            state.currentAdventure = name;
             vscode.workspace.applyEdit(wsedit).then((success) => {
-                if (!success) {
-                    vscode.window.showInformationMessage("Create adventure " + name + " result " + success);
+                    if (!success) {
+                        vscode.window.showInformationMessage("Create adventure " + name + " result " + success);
                 }
             });
+            setCurrentAdventure(name);
         });
     });
 }
