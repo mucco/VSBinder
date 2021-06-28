@@ -33,6 +33,14 @@
 			{
 				"command": "VSBinder.createAdventure",
 				"title": "VSBinder: Create new Adventure"
+			},
+			{
+				"command": "VSBinder.changeCampaign",
+				"title": "VSBinder: Change working Campaign"
+			},
+			{
+				"command": "VSBinder.changeAdventure",
+				"title": "VSBinder: Change working Adventure"
 			}
 		]
 	},

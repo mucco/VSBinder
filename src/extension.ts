@@ -6,7 +6,7 @@ import * as path from 'path';
 
 import { state, getWorldPath } from "./state";
 import { createAdventure, selectLastAdventure } from "./adventure";
-import { createCampaign, setActiveCampaign } from "./campaign";
+import { createCampaign, setFirstCampaign } from "./campaign";
 
 function createWorld() {
 	let options: vscode.InputBoxOptions = {
@@ -44,7 +44,7 @@ export function activate(context: vscode.ExtensionContext) {
 	state.wsPath = vscode.workspace.workspaceFolders[0].uri.path;
 	state.templates.adventure = context.asAbsolutePath(path.join("templates", "AdventureTemplate.md"));
 	state.templates.campaign = context.asAbsolutePath(path.join("templates", "CampaignTemplate.md"));
-	setActiveCampaign().then(() => {
+	setFirstCampaign().then(() => {
 		selectLastAdventure();
 	});
 

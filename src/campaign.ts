@@ -40,7 +40,7 @@ export function createCampaign() {
     });
 }
 
-export function setActiveCampaign() {
+export function setFirstCampaign() {
     return vscode.workspace.findFiles(new vscode.RelativePattern(state.wsPath, "**/Campaign.md")).then(campaigns => {
         if (campaigns.length === 0) {
             return;
@@ -53,5 +53,37 @@ export function setActiveCampaign() {
         state.currentWorld = world ?? "";
         console.log("Set active world to " + state.currentWorld);
         setCurrentCampaign(campaign ?? "");
+    });
+}
+
+export function changeCampaign() {
+    vscode.workspace.findFiles(new vscode.RelativePattern(state.wsPath, "**/Campaign.md")).then(campaigns => {
+        if (campaigns.length === 0) {
+            return;
+        }
+
+        let selections: string[] = [];
+        for (let i = 0; i < campaigns.length; i++) {
+            let pathParts = campaigns[i].path.split('/');
+            pathParts.pop(); // discard 'Campaign.md'
+            let campaignName = pathParts.pop();
+            if (campaignName)
+            {
+                selections.push(campaignName);
+            }
+        }
+
+        let options: vscode.QuickPickOptions = {
+            canPickMany: false,
+        };
+        vscode.window.showQuickPick(selections, options).then((selected) => {
+            selected = selected ?? "";
+            for (let i = 0; i < selections.length; i++) {
+                if (selections[i] === selected)
+                {
+                    setCurrentCampaign(selected);
+                }
+            }
+        });
     });
 }

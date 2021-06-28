@@ -12,6 +12,8 @@ Tool to help RPG Game Masters organize their DMing and worldbuilding assets via 
 ## Next
 
 - [ ] Bestiary
+- [ ] Make Location template
+- [ ] Use Character template for sample characters
 - [ ] Ways to roll stuff
 
 ## Important
