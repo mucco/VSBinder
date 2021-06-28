@@ -24,15 +24,15 @@
 		"commands": [
 			{
 				"command": "VSBinder.createWorld",
-				"title": "Create new World"
+				"title": "VSBinder: Create new World"
 			},
 			{
 				"command": "VSBinder.createCampaign",
-				"title": "Create new Campaign"
+				"title": "VSBinder: Create new Campaign"
 			},
 			{
 				"command": "VSBinder.createAdventure",
-				"title": "Create new Adventure"
+				"title": "VSBinder: Create new Adventure"
 			}
 		]
 	},
