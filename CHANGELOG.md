@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- Added Character template
+- Added Monster template
+
 ## [0.1.1]
 
 - Fixed campaign and adventure templates not being bundled

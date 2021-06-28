@@ -15,3 +15,8 @@ This is needed to describe the character and hint at the above. One mannerism or
 ## Bio
 
 Backstory and context about the above things can be filled out here. It is of lesser importance.
+
+## Appears in
+
+- [Adventure one](rel_path_to_adventure)
+- [Adventure two](rel_path_to_adventure)
