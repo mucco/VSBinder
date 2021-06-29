@@ -4,6 +4,7 @@
 
 - Added Character template
 - Added Monster template
+- Added 'Change Campaign/Adventure' commands
 - Improved command names
 
 ## [0.1.1]
