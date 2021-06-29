@@ -87,3 +87,31 @@ export function createAdventure(prompt: string = "What is the name of the advent
         });
     });
 }
+
+export function changeAdventure() {
+    vscode.workspace.findFiles(new vscode.RelativePattern(getCampaignPath(), "Adventures/*.md")).then(adventures => {
+        if (adventures.length === 0) {
+            return;
+        }
+
+        let selections: string[] = [];
+        for (let i = 0; i < adventures.length; i++) {
+            let pathParts = adventures[i].path.split('/');
+            let campaignName = pathParts.pop() ?? "";
+            selections.push(campaignName);
+        }
+
+        let options: vscode.QuickPickOptions = {
+            canPickMany: false,
+        };
+        vscode.window.showQuickPick(selections, options).then((selected) => {
+            selected = selected ?? "";
+            for (let i = 0; i < selections.length; i++) {
+                if (selections[i] === selected)
+                {
+                    setCurrentAdventure(selected);
+                }
+            }
+        });
+    });
+}
