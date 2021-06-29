@@ -6,7 +6,7 @@ import * as path from 'path';
 
 import { state, getWorldPath } from "./state";
 import { createAdventure, selectLastAdventure } from "./adventure";
-import { createCampaign, setFirstCampaign } from "./campaign";
+import { createCampaign, setFirstCampaign, changeCampaign } from "./campaign";
 
 function createWorld() {
 	let options: vscode.InputBoxOptions = {
@@ -56,6 +56,8 @@ export function activate(context: vscode.ExtensionContext) {
 	disposable = vscode.commands.registerCommand('VSBinder.createCampaign', createCampaign);
 	context.subscriptions.push(disposable);
 	disposable = vscode.commands.registerCommand('VSBinder.createAdventure', createAdventure);
+	context.subscriptions.push(disposable);
+	disposable = vscode.commands.registerCommand('VSBinder.changeCampaign', changeCampaign);
 	context.subscriptions.push(disposable);
 }
 

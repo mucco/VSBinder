@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 
 import { state, getCampaignPath, setCurrentCampaign } from "./state";
-import { createAdventure } from "./adventure";
+import { createAdventure, selectLastAdventure } from "./adventure";
 
 let fs = require("fs");
 
@@ -82,6 +82,7 @@ export function changeCampaign() {
                 if (selections[i] === selected)
                 {
                     setCurrentCampaign(selected);
+                    selectLastAdventure();
                 }
             }
         });
